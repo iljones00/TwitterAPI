@@ -2,17 +2,13 @@
 
 import tweepy
 import json
-from privateFields import *
+from privateFields import api
 
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
-
-api = tweepy.API(auth)
 
 '''
 basic account method examples
 
-# print(api.me().name)
+print(api.me().name)
 # api.retweets(1161209048257245184, 5)
 # api.create_friendship("realpython")
 # api.update_status(status='Hello World!!!')
