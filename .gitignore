@@ -1,4 +1,4 @@
 .vscode/
 privateFields.py
 TicTacToe/
-helloWorld\__pycache__
+helloWorld/__pycache__/

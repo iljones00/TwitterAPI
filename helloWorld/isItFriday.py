@@ -14,15 +14,15 @@ havePosted = False
 class PST8PDT(datetime.tzinfo):
 
     def utcoffset(self, dt):
-        return datetime.timedelta(hours=-8) + self.dst(dt)
+        return datetime.timedelta(hours= -8) + self.dst(dt)
 
     def dst(self, dt):
         d = datetime.datetime(dt.year, 3, 8)        #2nd Sunday in March
-        self.dston = d + datetime.timedelta(days=6-d.weekday())
+        self.dston = d + datetime.timedelta(days= 6 - d.weekday())
         d = datetime.datetime(dt.year, 11, 1)       #1st Sunday in Nov
-        self.dstoff = d + datetime.timedelta(days=6-d.weekday())
-        if self.dston <= dt.replace(tzinfo=None) < self.dstoff:
-            return datetime.timedelta(hours=1)
+        self.dstoff = d + datetime.timedelta(days= 6 - d.weekday())
+        if self.dston <= dt.replace(tzinfo= None) < self.dstoff:
+            return datetime.timedelta(hours= 1)
         else:
             return datetime.timedelta(0)
 
@@ -34,12 +34,17 @@ dt = datetime.datetime.now(tz=PST8PDT())
 
 #Schedules posts at a given hour.
 def schedulePosts(hour) :
-    if dt.hour == hour:
-        if dt.day == 13 and dt.weekday() == 4 and havePosted == False:
+    global havePosted
+    if dt.hour == 0 and havePosted == True :
+        havePosted = False
+    if dt.hour == hour and havePosted == False :
+        if dt.day == 13 and dt.weekday() == 4 :
             api.update_status("Yes.")
         else :
             api.update_status("No.")
+        logger.info("Checked if today is Friday the 13th")
         havePosted = True
+        
 
 
 def check_mentions(api, keywords, since_id):
@@ -67,14 +72,16 @@ def check_mentions(api, keywords, since_id):
 # def check_dms() :
 
 
+
 def main() :
     since_id = 1
     while True:
         print(since_id)
         # since_id = check_mentions(api, ["When is it Friday the 13th"], since_id)
-        schedulePosts(7)
+        schedulePosts(20)
         # check_mentions
         # check_tweets()
         # check_dms()
         logger.info("Waiting...")
         time.sleep(60)
+main()

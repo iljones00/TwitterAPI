@@ -13,7 +13,6 @@ print(api.me().name)
 # api.create_friendship("realpython")
 # api.update_status(status='Hello World!!!')
 '''
-
 '''
 This is how to get tweets in a timeline
 
